@@ -111,6 +111,21 @@ class User(Base):
         server_default=func.current_timestamp(),
         onupdate=func.current_timestamp()
     )
+    client_profile = relationship(
+        "ClientProfile",
+        back_populates="user",
+        uselist=False,
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    employee_profile = relationship(
+        "EmployeeProfile",
+        back_populates="user",
+        uselist=False,
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
 
     # Restricción para permitir un solo SUPER_ADMIN.
     # MySQL asignará 1 a ese rol y NULL a los demás.

@@ -5,10 +5,15 @@ from sqlalchemy import engine_from_config, pool
 
 from app.core.config import settings
 from app.infrastructure.database.base import Base
-
-# Importamos los modelos para registrarlos en Base.metadata.
-# Los crearemos en los siguientes pasos.
-# from app.models import User, UserSession
+from app.models import (
+    User,
+    UserSession,
+    ClientProfile,
+    EmployeeProfile,
+    Procedure,
+    ProcedureSession,
+    Appointment,
+)
 
 config = context.config
 
@@ -18,7 +23,7 @@ if config.config_file_name is not None:
 # La conexión se obtiene desde las variables de entorno.
 config.set_main_option(
     "sqlalchemy.url",
-    settings.DATABASE_URL.replace("%", "%%")
+    settings.DATABASE_URL.replace("%", "%%"),
 )
 
 # Metadata que Alembic utilizará para comparar modelos y tablas.
@@ -64,11 +69,3 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
-    from logging.config import fileConfig
-
-from alembic import context
-from sqlalchemy import engine_from_config, pool
-
-from app.core.config import settings
-from app.infrastructure.database.base import Base
-from app.models import User, UserSession
